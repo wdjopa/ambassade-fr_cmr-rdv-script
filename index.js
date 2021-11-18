@@ -2,28 +2,29 @@ window.alert_activated = true
 window.cnt2 = 0
 
 // Desired days is the list
-let desired_days = ["1911",
-    "2011",
-    "2111",
-    "2211",
-    "2311",
-    "2411",
-    "2511",
-    "2611",
-    "2711",
-    "2811",
-    "2911",
-    "3011",
-    "0112",
-    "0212",
-    "0312",
-    "0412",
-    "0512",
-    "0612",
-    "0712",
-    "0812",
-    "0912",
-    "1012",
+// FORMAT : DDMMYYYY 
+let desired_days = ["19112021",
+    "20112021",
+    "21112021",
+    "22112021",
+    "23112021",
+    "24112021",
+    "25112021",
+    "26112021",
+    "27112021",
+    "28112021",
+    "29112021",
+    "30112021",
+    "01122021",
+    "02122021",
+    "03122021",
+    "04122021",
+    "05122021",
+    "06122021",
+    "07122021",
+    "08122021",
+    "09122021",
+    "10122021",
 ]
 
 
@@ -35,7 +36,7 @@ function clearAllInterval() {
 function notify_me(available_date = "UNKNOW") {
     let message = "🚨🚨🚨 ALERTE RDV Disponible le : " + available_date + " Lien : https://pastel.diplomatie.gouv.fr/rdvinternet/html-4.02.00/frameset/frameset.html?lcid=1&sgid=318&suid=1"
     // ADD A WEBSERVICE TO SEND AN EMAIL OR A TEXT MESSAGE HERE
-    fetch("https://dashboard.genuka.com/api/2021-05/notify/telegram/355?message=" + message)
+    // fetch("https://dashboard.genuka.com/api/2021-05/notify/telegram/355?message=" + message)
 }
 
 
@@ -67,9 +68,6 @@ async function get_horaires() {
                         script_precedent()
                         setTimeout(() => {
                             script_suivant()
-                            setTimeout(() => {
-                                fill_form(available_date)
-                            }, 300)
                         }, 300)
                     }, 500)
 
