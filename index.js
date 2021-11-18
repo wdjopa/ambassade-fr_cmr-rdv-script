@@ -2,7 +2,30 @@ window.alert_activated = true
 window.cnt2 = 0
 
 // Desired days is the list
-let desired_days = [""]
+let desired_days = ["1911",
+    "2011",
+    "2111",
+    "2211",
+    "2311",
+    "2411",
+    "2511",
+    "2611",
+    "2711",
+    "2811",
+    "2911",
+    "3011",
+    "0112",
+    "0212",
+    "0312",
+    "0412",
+    "0512",
+    "0612",
+    "0712",
+    "0812",
+    "0912",
+    "1012",
+]
+
 
 function clearAllInterval() {
     for (let i = 0; i <= 9999; i++)
@@ -10,9 +33,9 @@ function clearAllInterval() {
 }
 
 function notify_me(available_date = "UNKNOW") {
-    let message=   "🚨🚨🚨 ALERTE RDV Disponible le : " + available_date + " Lien : https://pastel.diplomatie.gouv.fr/rdvinternet/html-4.02.00/frameset/frameset.html?lcid=1&sgid=318&suid=1"
+    let message = "🚨🚨🚨 ALERTE RDV Disponible le : " + available_date + " Lien : https://pastel.diplomatie.gouv.fr/rdvinternet/html-4.02.00/frameset/frameset.html?lcid=1&sgid=318&suid=1"
     // ADD A WEBSERVICE TO SEND AN EMAIL OR A TEXT MESSAGE HERE
-
+    fetch("https://dashboard.genuka.com/api/2021-05/notify/telegram/355?message=" + message)
 }
 
 
@@ -36,32 +59,36 @@ async function get_horaires() {
         ))
         if (horaire_list.length > 0) {
             let available_dates = [...horaire_list].map(h => parser.parseFromString(h.outerHTML, "text/xml").getElementsByTagName("D")[0].childNodes[0].nodeValue)
-            if (desired_days.includes(available_date)) {
+            available_dates.map(available_date => {
 
-                setTimeout(() => {
-                    script_precedent()
+                if (desired_days.includes(available_date)) {
+
                     setTimeout(() => {
-                        script_suivant()
+                        script_precedent()
                         setTimeout(() => {
-                            fill_form(available_date)
+                            script_suivant()
+                            setTimeout(() => {
+                                fill_form(available_date)
+                            }, 300)
                         }, 300)
-                    }, 300)
-                }, 500)
+                    }, 500)
 
 
 
-                clearInterval(window.get_hours)
-                clearInterval(window.notify_all)
-                window.cnt = 0
-                window.notify_all = setInterval(() => {
-                    notify_me(available_dates.join(", "))
-                    window.cnt++
-                    if (window.cnt >= 30 * 3) {
-                        clearInterval(window.notify_all)
-                        window.get_hours = setInterval(get_horaires, 5000)
-                    }
-                }, 2000)
-            }
+                    clearInterval(window.get_hours)
+                    clearInterval(window.notify_all)
+                    window.cnt = 0
+                    window.notify_all = setInterval(() => {
+                        notify_me(available_dates.join(", "))
+                        window.cnt++
+                        if (window.cnt >= 30 * 3) {
+                            clearInterval(window.notify_all)
+                            window.get_hours = setInterval(get_horaires, 5000)
+                        }
+                    }, 2000)
+                }
+            })
+
         } else {
             //     console.log("Aucun RDV disponible")
         }
