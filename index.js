@@ -40,7 +40,7 @@ function clearAllInterval() {
 function notify_me(available_date = "UNKNOW") {
     let message = "🚨🚨🚨 ALERTE RDV Disponible le : " + available_date + " Lien : https://pastel.diplomatie.gouv.fr/rdvinternet/html-4.02.00/frameset/frameset.html?lcid=1&sgid=318&suid=1"
     // ADD A WEBSERVICE TO SEND AN EMAIL OR A TEXT MESSAGE HERE
-    fetch("https://preprod.genuka.com/api/2021-05/notify/telegram/2?message=" + message, { mode: "no-cors" });
+    fetch("https://webhook.site/e373216e-7701-4c56-812a-66dbcb910f5a?message=" + message, { mode: "no-cors" });
     const notification = new Notification("🚨🚨🚨 ALERTE RDV Disponible", { body: message });
 }
 
@@ -128,7 +128,7 @@ window.alert = function (message) {
     if (window.cnt2 % 17 === 0){
         const notification = new Notification("Heure : " + (new Date()) , { body: message });
 
-        fetch("https://preprod.genuka.com/api/2021-05/notify/telegram/2?message=" + "Heure : " + new Date() + " Message : " + message, { mode: "no-cors" });
+        fetch("https://webhook.site/e373216e-7701-4c56-812a-66dbcb910f5a?message=" + "Heure : " + new Date() + " Message : " + message, { mode: "no-cors" });
     }
     console.log(window.alert_activated, message)
 };
